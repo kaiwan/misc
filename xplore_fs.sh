@@ -59,16 +59,16 @@ do
 		   printf "%12d " ${val}
 		   [ ${val} -gt 1024 ] && {
 		      valkb=$((val/1024))
-			  printf "(%6d KB)" ${valkb}
+			  printf "(%6d K)" ${valkb}
 		   }
 		   [ ${val} -gt 1048576 ] && {
 		      valmb=$(bc <<< "${val}/1048576.0")  # TODO - not getting floating point value !??
 		      #valmb=$((val/1048576.0))
-			  printf "(%6.2f MB)" ${valmb}
+			  printf "(%6.2f M)" ${valmb}
 		   }
 		   [ ${val} -gt 1073741824 ] && {
 		      valgb=$((val/1073741824))
-			  printf "(%6.2f GB)" ${valgb}
+			  printf "(%6.2f G)" ${valgb}
 		   }
 		else
 		   #printf "%s" ${val}
