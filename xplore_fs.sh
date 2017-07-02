@@ -12,10 +12,10 @@
 
 STARTDIR=/sys/devices
 name=$(basename $0)
-[ `id -u` -ne 0 ] && {
- echo "${name}: need to run as root. Can do 'sudo <path/to/>${name}'"
- exit 1
-}
+#[ `id -u` -ne 0 ] && {
+# echo "${name}: need to run as root. Can do 'sudo <path/to/>${name}'"
+# exit 1
+#}
 
 [ $# -ne 1 ] && {
  echo "Usage: ${name} start-dir"
@@ -26,11 +26,15 @@ name=$(basename $0)
  echo "${name}: '$1' invalid folder. Aborting..."
  exit 1
 }
+[ ! -r $1 ] && {
+ echo "${name}: '$1' not read-able, re-run this utility as root. Aborting..."
+ exit 1
+}
 STARTDIR=$1
 MAXDEPTH=4
 SEP="------------"
 
-SHOW_SUMMARY=1
+SHOW_SUMMARY=0
 if [ ${SHOW_SUMMARY} -eq 1 ]; then
 	echo "===================== SUMMARY LIST of Files =========================="
 	echo
@@ -77,7 +81,7 @@ do
 		printf "\n"
 		#echo "   ${val}" #$(cat ${sysfile})"
 	fi
-  elif [ -l ${sysfile} ]; then
+  elif [ -L ${sysfile} ]; then
   	printf ": <slink>\n"
 	echo "  $(ls -l ${sysfile})"
   fi
